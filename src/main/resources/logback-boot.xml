@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) -[%-5level] [%thread] %c - %msg%n" />
+  <property name="LOG_FILE_PATH" value="/weather/log" />
+  
+  <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_FILE_PATH}/ws.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_FILE_PATH}/ws-%d{yyyy-MM-dd}.log</fileNamePattern>
+        <MaxHistory>100</MaxHistory>
+    </rollingPolicy>
+    
+    <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>${PATTERN}</pattern>
+    </layout>
+  </appender>
+  
+  <appender name="ROLLING-FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_FILE_PATH}/ws-info.log</file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">   
+        <level>INFO</level>   
+        <onMatch>ACCEPT</onMatch>   
+        <onMismatch>DENY</onMismatch>   
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_FILE_PATH}/ws-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+        <MaxHistory>100</MaxHistory>
+    </rollingPolicy>
+    
+    <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>${PATTERN}</pattern>
+    </layout>
+  </appender>
+  
+  <appender name="ROLLING-FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_FILE_PATH}/ws-error.log</file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">   
+        <level>ERROR</level>   
+        <onMatch>ACCEPT</onMatch>   
+        <onMismatch>DENY</onMismatch>   
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_FILE_PATH}/ws-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+        <MaxHistory>100</MaxHistory>
+    </rollingPolicy>
+    
+    <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>${PATTERN}</pattern>
+    </layout>
+  </appender>
+  
+  <root level="info">
+    <appender-ref ref="ROLLING-FILE" />
+    <appender-ref ref="ROLLING-FILE-INFO" />
+    <appender-ref ref="ROLLING-FILE-ERROR" />
+  </root>
+</configuration>
